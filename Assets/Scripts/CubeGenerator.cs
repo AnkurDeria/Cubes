@@ -95,6 +95,7 @@ public class CubeGenerator : MonoBehaviour
     private const float SQRT_TWO = 1.414f;
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         walls[0] = cubesParent.Find("BWall1");
         walls[1] = cubesParent.Find("SWall1");
         walls[2] = cubesParent.Find("BWall2");
@@ -162,6 +163,7 @@ public class CubeGenerator : MonoBehaviour
                 break;
             }
         }
+        StaticBatchingUtility.Combine(cubeParts.ToArray(),cubesParent.gameObject);
     }
 
     private void SetCameraPosition()
@@ -178,9 +180,10 @@ public class CubeGenerator : MonoBehaviour
     {
         cubeParts.Add(new GameObject("Part" + parts.ToString()));
         cubeParts[parts].transform.parent = walls[_i];
+        cubeParts[parts].isStatic = true;
         cubeParts[parts].AddComponent<MeshFilter>();
         cubeParts[parts].AddComponent<MeshRenderer>();
-        cubeParts[parts].GetComponent<MeshRenderer>().material = cubeMat;
+        cubeParts[parts].GetComponent<MeshRenderer>().sharedMaterial = cubeMat;
 
         meshFilter = cubeParts[parts].GetComponent<MeshFilter>();
         parts++;
@@ -205,34 +208,6 @@ public class CubeGenerator : MonoBehaviour
             {
                 triangles.Add(vertStartIndex + cubeTriangles[k]);
             }
-
-            if (vertices.Count > 65519)
-            {
-                meshFilter.mesh.SetVertices(vertices);
-                meshFilter.mesh.SetTriangles(triangles, 0);
-                meshFilter.mesh.SetNormals(normals);
-                meshFilter.mesh.SetColors(colours);
-                //mesh.mesh.SetUVs(0, _uvs);
-                meshFilter.mesh.Optimize();
-                if (cubesPerSide > 1)
-                {
-                    Instantiate(cubeParts[parts - 1], Vector3.zero, Quaternion.identity, walls[_i + 2]);
-                }
-                cubeParts.Add(new GameObject("Part" + parts.ToString()));
-                cubeParts[parts].transform.parent = walls[_i];
-                cubeParts[parts].AddComponent<MeshFilter>();
-                cubeParts[parts].AddComponent<MeshRenderer>();
-                cubeParts[parts].GetComponent<MeshRenderer>().material = cubeMat;
-
-                meshFilter = cubeParts[parts].GetComponent<MeshFilter>();
-                parts++;
-                vertices.Clear();
-                triangles.Clear();
-                normals.Clear();
-                colours.Clear();
-                
-            }
-          
         }
         meshFilter.mesh.SetVertices(vertices);
         meshFilter.mesh.SetTriangles(triangles, 0);
