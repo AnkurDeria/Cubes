@@ -130,7 +130,7 @@ public class CubeSpawner : MonoBehaviour
         cubeToCamDist = wallMid * Mathf.Sqrt(2) / Mathf.Tan(vCam.m_Lens.FieldOfView * 0.5f * Mathf.Deg2Rad);
         vCam.transform.position = new Vector3(-cubeToCamDist / 2, wallMid, -cubeToCamDist / 2);
         
-        vCam.m_Lens.FarClipPlane = 2 * cubeToCamDist + cubeToCamDist / Mathf.Sqrt(2);
+        vCam.m_Lens.FarClipPlane = Mathf.Clamp(2 * cubeToCamDist + cubeToCamDist / Mathf.Sqrt(2),50,Mathf.Infinity);
         transform.position = new Vector3(wallMid, wallMid, wallMid);
 
 
