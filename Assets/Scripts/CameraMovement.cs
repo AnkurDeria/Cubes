@@ -9,7 +9,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera vCam;
     [SerializeField] private float halfScreenWidth;
     [SerializeField] private float swipeMultiplier = 4f;
-	[SerializeField] private GameObject hintBox;
+    [SerializeField] private GameObject hintBox;
     [SerializeField] private GameObject inputBox;
     [SerializeField] private Vector2 swipe;
 
@@ -18,25 +18,22 @@ public class CameraMovement : MonoBehaviour
     private Touch touch;
 
     public void DeleteHint()
-	{
-		GameObject.Destroy(hintBox);
+    {
+        GameObject.Destroy(hintBox);
         inputBox.GetComponentInChildren<Button>().interactable = true;
         inputBox.GetComponentInChildren<TMP_InputField>().interactable = true;
-	}
+    }
 
-	private void Awake()
-	{
-		// id = -1 means the finger is not being tracked
-		leftFingerId = -1;
-		rightFingerId = -1;
+    private void Awake()
+    {
+        
+        leftFingerId = -1;
+        rightFingerId = -1;
 
-		// only calculate once
-		halfScreenWidth = Screen.width / 2;
-
-		
-	}
-	private void Update()
-	{
+        halfScreenWidth = Screen.width / 2;
+    }
+    private void Update()
+    {
         for (int i = 0; i < Input.touchCount; i++)
         {
             touch = Input.GetTouch(i);
@@ -84,11 +81,11 @@ public class CameraMovement : MonoBehaviour
             }
         }
     }
-   
+
     private void LateUpdate()
     {
         if (rightFingerId != -1 || leftFingerId != -1)
-		{
+        {
             vCam.transform.RotateAround(transform.position, Vector3.up, swipe.x);
         }
     }

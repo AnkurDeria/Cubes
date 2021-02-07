@@ -63,7 +63,7 @@ public class CubeGenerator : MonoBehaviour
             new Vector3(0f,0f,0f),
             new Vector3(0f,0f,1f)
         };
-    private Vector3[] cubeNormals = 
+    private Vector3[] cubeNormals =
         {
             -Vector3.forward,
             -Vector3.forward,
@@ -91,7 +91,7 @@ public class CubeGenerator : MonoBehaviour
             -Vector3.up
         };
 
-   
+
     public void CubeGen()
     {
         if (userInput.text == "" || userInput.text[0] == '-')
@@ -111,7 +111,7 @@ public class CubeGenerator : MonoBehaviour
         {
             return;
         }
-        
+
         actualCubeGap = cubeGap * Mathf.Pow(cubesPerSide, 1f / 3f);
         SetCameraPosition();
 
@@ -123,10 +123,10 @@ public class CubeGenerator : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    walls[i+2].position = walls[i].position + new Vector3(0f, 0f, cubesPerSide - 1 + (cubesPerSide - 1) * actualCubeGap);
+                    walls[i + 2].position = walls[i].position + new Vector3(0f, 0f, cubesPerSide - 1 + (cubesPerSide - 1) * actualCubeGap);
                 }
 
-                else if(cubesPerSide > 2)
+                else if (cubesPerSide > 2)
                 {
                     walls[i].position += new Vector3(1f + actualCubeGap, 0f, 0f);
                     walls[i + 2].position += new Vector3(1f + actualCubeGap, 0f, 0f);
@@ -139,7 +139,7 @@ public class CubeGenerator : MonoBehaviour
                 {
                     break;
                 }
-                
+
             }
             else
             {
@@ -172,13 +172,13 @@ public class CubeGenerator : MonoBehaviour
     {
         wallMid = (cubesPerSide + (cubesPerSide - 1) * actualCubeGap) / 2f;
         cubeToCamDist = wallMid * SQRT_TWO / Mathf.Tan(vCam.m_Lens.FieldOfView * 0.5f * Mathf.Deg2Rad);
-        vCam.transform.position = new Vector3(-cubeToCamDist/ 2f, wallMid, -cubeToCamDist / 2f);
-        
+        vCam.transform.position = new Vector3(-cubeToCamDist / 2f, wallMid, -cubeToCamDist / 2f);
+
         vCam.m_Lens.FarClipPlane = Mathf.Clamp(2 * cubeToCamDist + cubeToCamDist / SQRT_TWO, 50, Mathf.Infinity);
         transform.position = new Vector3(wallMid, wallMid, wallMid);
     }
 
-    private void WallGen( int _i)
+    private void WallGen(int _i)
     {
         cubeParts.Add(new GameObject("Part" + parts.ToString()));
         cubeParts[parts].transform.parent = walls[_i];
@@ -192,7 +192,7 @@ public class CubeGenerator : MonoBehaviour
 
         parts++;
 
-        for (int j = 0; j < cubesPerSide * (cubesPerSide - 2*_i); j++)
+        for (int j = 0; j < cubesPerSide * (cubesPerSide - 2 * _i); j++)
         {
             xOffset = j % (cubesPerSide - 2 * _i);
             yOffset = j / (cubesPerSide - 2 * _i);
@@ -266,7 +266,7 @@ public class CubeGenerator : MonoBehaviour
         colours.Clear();
     }
 
-   
+
     public void ClearVariables()
     {
         parts = 0;
@@ -274,7 +274,7 @@ public class CubeGenerator : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            foreach(Transform child in walls[i])
+            foreach (Transform child in walls[i])
             {
                 GameObject.Destroy(child.gameObject);
             }
