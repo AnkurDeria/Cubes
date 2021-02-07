@@ -26,7 +26,6 @@ public class CameraMovement : MonoBehaviour
 
     private void Awake()
     {
-        
         leftFingerId = -1;
         rightFingerId = -1;
 
@@ -45,11 +44,14 @@ public class CameraMovement : MonoBehaviour
                     {
                         leftFingerId = touch.fingerId;
                     }
+                    
                     else if (touch.position.x > halfScreenWidth && rightFingerId == -1)
                     {
                         rightFingerId = touch.fingerId;
                     }
+                    
                     break;
+                    
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
 
@@ -57,12 +59,14 @@ public class CameraMovement : MonoBehaviour
                     {
                         leftFingerId = -1;
                     }
+                    
                     else if (touch.fingerId == rightFingerId)
                     {
                         rightFingerId = -1;
                     }
 
                     break;
+                    
                 case TouchPhase.Moved:
 
                     if (touch.fingerId == rightFingerId || touch.fingerId == leftFingerId)
@@ -71,12 +75,14 @@ public class CameraMovement : MonoBehaviour
                     }
 
                     break;
+                    
                 case TouchPhase.Stationary:
 
                     if (touch.fingerId == rightFingerId)
                     {
                         swipe = Vector2.zero;
                     }
+                    
                     break;
             }
         }
